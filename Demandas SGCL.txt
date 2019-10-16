@@ -1,0 +1,91 @@
+SMS 02325 MODULO GESTÃO RISCOS BASEADO NO MOD DE SEGURANÇA (Ainda sem levantamento com o usúario)
+	2352 - Ajuste Abrangência mod auditoria e versão do sistema.pptx
+
+
+SMS 02352 EDICAO DE ABRANGENCIA MOD AUDITORIA, BUG ANO RELATORIO E VERSAO (5 dias)
+	2352 - Ajuste Abrangência mod auditoria e versão do sistema.pptx
+
+	Arquivos criados e alterados:
+
+		sobre.asp
+
+		auditoria/alterarCondicionantes.asp
+		auditoria/condicionantes.asp
+		auditoria/incluirCondicionantes.asp
+		auditoria/relatorioCondicionantes.asp
+		auditoria/relatorioCondicionantesGerado.asp
+		auditoria/relatorioCondicionantesGeradoTransporEmColunasExcel_Auditoria.asp
+
+		includes/topo.asp
+		
+		js/excluiCond.js
+
+		manutenção/adiciona_nc_abrangencia.asp (criado)
+		manutenção/lista_requisito_legal.asp
+
+
+SMS 02315 CRIAR MODULO ANOMALIAS BASEADOS NO MOD AUDITORIA (15 dias)
+	Módulos LAIPDs e Anomalias Rev0.pptx
+
+
+
+-------------------------------------------------------------------------------------------------
+
+ID do documento: 33159 
+ 
+Níveis 
+Nível 1  GOP - GERÊNCIA DE OPERAÇÕES 
+Nível 2  GROC - GERÊNCIA REG DE OPERAÇÕES CENTRO 
+Nível 3  BABET - BASE DE BETIM 
+ 
+Auditoria 
+Cadastrado por:  MARCELA SOUZA PERES (RWUC) 
+Órgão Fiscalizador  MG - ESTADUAL - FEAM 
+Tipo de Auditoria/Avaliação  Ambiental de Conformidade Legal 
+Escopo da Auditoria/Avaliação Lei Estadual nº 10.627/1992 (MG) 
+Último dia Auditoria/Avaliação  08/03/2018 
+Observações: 
+ 
+
+
+-------------------------------------------------------------------------------------------------
+
+drop table S545.GCL_ABRANGENCIA cascade constraints;
+
+/*==============================================================*/
+/* Table: GCL_ABRANGENCIA                                       */
+/*==============================================================*/
+create table S545.GCL_ABRANGENCIA 
+(
+   ABRA_CHV_IDE         NUMBER(5)            not null,
+   ABRA_TXT_ABRANGENCIA CHAR(1)              not null,
+   ABRA_NOM_ABRANGENCIA VARCHAR(200)         not null,
+   ABRA_IND_STATUS      CHAR(1)              default 'A' not null
+      constraint CKC_ABRA_IND_STATUS_GCL_ABRA check (ABRA_IND_STATUS = upper(ABRA_IND_STATUS)),
+   constraint PK_GCL_ABRANGENCIA primary key (ABRA_CHV_IDE)
+);
+
+comment on table S545.GCL_ABRANGENCIA is
+'Tabela que recebe as Abrangências.';
+
+comment on column S545.GCL_ABRANGENCIA.ABRA_TXT_ABRANGENCIA is
+'Letra que identifica a Abrangência. Funciona como ID. Mantido por questões de implementação antiga. Será revisado.';
+
+comment on column S545.GCL_ABRANGENCIA.ABRA_NOM_ABRANGENCIA is
+'Nome da Abrangência.';
+
+comment on column S545.GCL_ABRANGENCIA.ABRA_IND_STATUS is
+'Situação de "A" ativo ou "I" inativo. Por default o registro é criado como "A" ativo.';
+
+-------------------------------------------------------------------------------------------------
+drop sequence S545.SEQ_ABRA;
+
+create sequence S545.SEQ_ABRA
+increment by 1
+start with 0
+ maxvalue 99999
+ nominvalue
+nocycle
+ nocache
+noorder;
+-------------------------------------------------------------------------------------------------
